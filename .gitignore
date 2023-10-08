@@ -1,0 +1,29 @@
+# Created by https://www.gitignore.io/api/gradle,java,springboot
+
+### Gradle ###
+# Exclude Gradle Wrapper's cache directory
+.gradle/
+
+.idea/
+
+### Spring Boot ###
+# Application artifacts
+build/
+target/
+*.jar
+*.war
+
+# Embedded web server logs
+logs/
+
+# Application run and debug logs
+*.log
+
+### Java ###
+*.class
+
+# BlueJ files
+*.ctxt
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
