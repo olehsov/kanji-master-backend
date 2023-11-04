@@ -1,8 +1,33 @@
 version: '3'
 services:
-  spring-boot-app:
+  db:
+    image: postgres
+    ports:
+      - "5432:5432"
+    restart: always
+    environment:
+      - POSTGRES_PASSWORD=kanji-master
+      - POSTGRES_USER=kanji-master
+      - POSTGRES_DB=kanji-master
+    networks:
+      - postgres
+  backend:
     build:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8000:8080"
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      - DB_NAME=kanji-master
+      - DB_USER=kanji-master
+      - DB_PASSWORD=kanji-master
+      - DB_HOST=host.docker.internal
+      - DB_PORT=5432
+      - PORT=8000
+    networks:
+      - postgres
+networks:
+  postgres:
+    driver: bridge

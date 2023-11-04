@@ -1,0 +1,39 @@
+type User {
+    id: ID!
+    username: String!
+    createdAt: String!
+    email: String!
+    password: String!
+    isActive: Boolean!
+}
+
+type Kanji {
+    id: ID!
+    kanji: String!
+    grade: Int
+    strokeCount: Int
+    meanings: [String!]!
+    heisigEn: String
+    kunReadings: [String!]!
+    onReadings: [String!]!
+    nameReadings: [String!]!
+    jlpt: Int
+    unicode: String
+    notes: [String!]!
+}
+
+type KanjiPage {
+    content: [Kanji]
+    totalPages: Int
+    totalElements: Int
+    last: Boolean
+    size: Int
+    number: Int
+    numberOfElements: Int
+    first: Boolean
+}
+
+type Query {
+    getKanjies(page: Int, size: Int): KanjiPage!
+    getKanji(id: Int): Kanji!
+}
