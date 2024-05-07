@@ -7,6 +7,13 @@ type User {
     isActive: Boolean!
 }
 
+type Reading {
+    id: ID!
+    mainKanji: [String]!
+    nameKanji: [String]!
+    reading: String!
+}
+
 type Kanji {
     id: ID!
     kanji: String!
@@ -33,7 +40,13 @@ type KanjiPage {
     first: Boolean
 }
 
+input KanjiFilter {
+    grade: [Int]
+    strokeCount: [Int],
+    jlpt: [Int]
+}
+
 type Query {
-    getKanjies(page: Int, size: Int): KanjiPage!
+    getKanjis(page: Int, size: Int, filter: KanjiFilter): KanjiPage!
     getKanji(id: Int): Kanji!
 }
