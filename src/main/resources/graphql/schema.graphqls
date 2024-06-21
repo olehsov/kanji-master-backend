@@ -14,6 +14,23 @@ type Reading {
     reading: String!
 }
 
+type Meaning {
+    id: ID!
+    glosses: [String!]!
+}
+type Variant {
+    id: ID!
+    written: String!
+    pronounced: String!
+    priorities: [String!]!
+}
+
+type Word {
+    id: ID!
+    variants: [Variant!]!
+    meanings: [Meaning!]!
+}
+
 type Kanji {
     id: ID!
     kanji: String!
@@ -21,9 +38,9 @@ type Kanji {
     strokeCount: Int
     meanings: [String!]!
     heisigEn: String
-    kunReadings: [String!]!
-    onReadings: [String!]!
-    nameReadings: [String!]!
+    kunReadings: [Reading!]!
+    onReadings: [Reading!]!
+    nameReadings: [Reading!]!
     jlpt: Int
     unicode: String
     notes: [String!]!
@@ -31,6 +48,17 @@ type Kanji {
 
 type KanjiPage {
     content: [Kanji]
+    totalPages: Int
+    totalElements: Int
+    last: Boolean
+    size: Int
+    number: Int
+    numberOfElements: Int
+    first: Boolean
+}
+
+type WordPage {
+    content: [Word]
     totalPages: Int
     totalElements: Int
     last: Boolean
@@ -49,4 +77,5 @@ input KanjiFilter {
 type Query {
     getKanjis(page: Int, size: Int, filter: KanjiFilter): KanjiPage!
     getKanji(id: Int): Kanji!
+    getWordsByKanji(page: Int, size: Int, kanjiId: Int): WordPage
 }

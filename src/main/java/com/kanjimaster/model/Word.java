@@ -1,5 +1,6 @@
 package com.kanjimaster.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,6 +22,7 @@ public class Word {
     private Long id;
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "kanji_id", referencedColumnName = "id")
+    @JsonIgnore
     private Kanji kanji;
     @ManyToMany(cascade = CascadeType.ALL, fetch = LAZY)
     @JoinTable(
