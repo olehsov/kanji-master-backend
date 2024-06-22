@@ -1,6 +1,5 @@
 package com.kanjimaster.controller;
 
-import com.kanjimaster.model.Kanji;
 import com.kanjimaster.model.Word;
 import com.kanjimaster.service.WordService;
 import org.springframework.data.domain.Page;
@@ -20,5 +19,10 @@ public class WordController {
     @QueryMapping
     public Mono<Page<Word>> getWordsByKanji(@Argument int page, @Argument int size, @Argument Long kanjiId) {
         return Mono.just(wordService.getWordByKanjiPage(page, size, kanjiId));
+    }
+
+    @QueryMapping
+    public Mono<Page<Word>> getWords(@Argument int page, @Argument int size) {
+        return Mono.just(wordService.getWordPage(page, size));
     }
 }

@@ -78,4 +78,5 @@ type Query {
     getKanjis(page: Int, size: Int, filter: KanjiFilter): KanjiPage!
     getKanji(id: Int): Kanji!
     getWordsByKanji(page: Int, size: Int, kanjiId: Int): WordPage
+    getWordsByKanji(page: Int, size: Int): WordPage
 }

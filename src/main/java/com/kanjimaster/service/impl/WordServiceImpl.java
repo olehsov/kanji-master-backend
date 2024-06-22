@@ -21,4 +21,10 @@ public class WordServiceImpl implements WordService {
         Pageable pageable = PageRequest.of(page, size);
         return wordRepository.findAllByKanji_Id(kanjiId, pageable);
     }
+
+    @Override
+    public Page<Word> getWordPage(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return wordRepository.findAll(pageable);
+    }
 }

@@ -5,4 +5,5 @@ import org.springframework.data.domain.Page;
 
 public interface WordService {
     Page<Word> getWordByKanjiPage(int page, int size, Long kanjiId);
+    Page<Word> getWordPage(int page, int size);
 }
