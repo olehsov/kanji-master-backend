@@ -2,6 +2,8 @@ spring:
   jpa:
     database: POSTGRESQL
     show-sql: true
+    properties:
+      hibernate.format_sql: true
     hibernate:
       ddl-auto: validate
   application:
@@ -17,6 +19,9 @@ spring:
   graphql:
     graphiql:
       enabled: true
+
+  main:
+    allow-circular-references: true
 #  flyway:
 #    baselineOnMigrate: true
 #    validateOnMigrate: false
@@ -29,4 +34,15 @@ spring:
 
 server:
   port : ${PORT:8080}
+
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE
+
 

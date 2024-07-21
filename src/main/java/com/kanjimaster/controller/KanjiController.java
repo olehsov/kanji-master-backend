@@ -1,29 +1,36 @@
 package com.kanjimaster.controller;
 
-import com.kanjimaster.filter.kanji.KanjiFilter;
-import com.kanjimaster.model.Kanji;
-import com.kanjimaster.service.KanjiService;
+import com.kanjimaster.model.updated.KanjiInfo;
+import com.kanjimaster.service.KanjiInfoService;
 import org.springframework.data.domain.Page;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 import reactor.core.publisher.Mono;
 
+import java.util.Collection;
+import java.util.Set;
+
 @Controller
 public class KanjiController {
-    private final KanjiService kanjiService;
+    private final KanjiInfoService kanjiInfoService;
 
-    public KanjiController(KanjiService kanjiService) {
-        this.kanjiService = kanjiService;
+    public KanjiController(KanjiInfoService kanjiInfoService) {
+        this.kanjiInfoService = kanjiInfoService;
     }
 
     @QueryMapping
-    public Mono<Page<Kanji>> getKanjis(@Argument int page, @Argument int size, @Argument KanjiFilter filter) throws Exception {
-        return Mono.just(kanjiService.getKanjiPage(page, size, filter));
+    public Mono<Page<KanjiInfo>> getKanjis(@Argument int page, @Argument int size) throws Exception {
+        return Mono.just(kanjiInfoService.getKanjiPage(page, size));
     }
 
     @QueryMapping
-    public Mono<Kanji> getKanji(@Argument Long id) {
-        return Mono.just(kanjiService.getKanji(id));
+    public Mono<KanjiInfo> getKanji(@Argument String kanji) {
+        return Mono.just(kanjiInfoService.getKanji(kanji));
+    }
+
+    @QueryMapping
+    public Mono<Collection<KanjiInfo>> getKanjiesByRadical(@Argument Set<String> radicals) {
+        return Mono.just(kanjiInfoService.getKanjiesByRadical(radicals));
     }
 }
