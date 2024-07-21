@@ -1,0 +1,1 @@
+insert into users (created_at,email,username,is_active,password) values ('2018-10-20', 'admin@gmail.com', 'admin', true, 'kanji-master');

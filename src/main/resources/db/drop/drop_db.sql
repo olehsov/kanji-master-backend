@@ -1,0 +1,9 @@
+drop table if exists users cascade;
+drop table if exists kanji_info cascade;
+drop table if exists radical cascade;
+drop table if exists radvar cascade;
+drop table if exists synonym cascade;
+drop table if exists sentence cascade;
+drop table if exists search cascade;
+drop table if exists look_likes cascade;
+drop table if exists antonym cascade;

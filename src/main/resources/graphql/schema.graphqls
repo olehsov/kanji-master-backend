@@ -1,0 +1,54 @@
+type User {
+    id: ID!
+    username: String!
+    createdAt: String!
+    email: String!
+    password: String!
+    isActive: Boolean!
+}
+
+type KanjiInfo {
+    kanji: String!
+    radical: String!
+    radvar: String!
+    type: String!
+    regularOn: String!
+    regularKun: String!
+    onyomi: String!
+    kunyomi: String!
+    nanori: String!
+    strokes: Int
+    grade: String
+    jlpt: String
+    kanken: String!
+    frequency: Int
+    meaning: String!
+    compactMeaning: String!
+    elements: String!
+    kanjiParts: String!
+    partOf: String!
+}
+
+type KanjiInfoPage {
+    content: [KanjiInfo]
+    totalPages: Int
+    totalElements: Int
+    last: Boolean
+    size: Int
+    number: Int
+    numberOfElements: Int
+    first: Boolean
+}
+
+type RadicalSearchOption {
+    radical: String!
+    strokes: Int!
+    isSimplifiedRadical: Boolean!
+}
+
+type Query {
+    getKanjis(page: Int, size: Int): KanjiInfoPage!
+    getKanji(kanji: String): KanjiInfo!
+    getRadicalSearchOptionDto: [RadicalSearchOption]
+    getKanjiesByRadical(radicals: [String]): [KanjiInfo]
+}
