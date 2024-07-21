@@ -7,7 +7,7 @@ WORKDIR /app
 COPY . .
 
 # Build the application
-RUN ./gradlew wrapper
+RUN ./gradlew init
 RUN ./gradlew bootJar
 
 # Stage 2: Run
