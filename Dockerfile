@@ -1,13 +1,12 @@
 # Stage 1: Build
-FROM gradle:jdk17 as build
+FROM gradle:8.7.0-jdk17 as build
 
 WORKDIR /app
 
 # Copy the source code to the container
 COPY . .
-
+RUN gradle wrapper
 # Build the application
-RUN ./gradlew init
 RUN ./gradlew bootJar
 
 # Stage 2: Run
