@@ -16,6 +16,8 @@ target/
 # Embedded web server logs
 logs/
 
+data/
+
 # Application run and debug logs
 *.log
 
