@@ -12,9 +12,7 @@ services:
     networks:
       - postgres
   backend:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: kmb
     ports:
       - "8000:8000"
     depends_on:

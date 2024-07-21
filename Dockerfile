@@ -1,6 +1,20 @@
-FROM openjdk
-EXPOSE 8080
-ARG JAR_FILE=build/libs/kanji-master-0.0.1-SNAPSHOT.jar
-ADD ${JAR_FILE} app.jar
+# Stage 1: Build
+FROM gradle:jdk17 as build
 
-ENTRYPOINT ["java","-jar","/app.jar"]
+WORKDIR /app
+
+# Copy the source code to the container
+COPY . .
+
+# Build the application
+RUN ./gradlew bootJar
+
+# Stage 2: Run
+FROM openjdk:17
+
+EXPOSE 8000
+
+# Copy the jar file from the build stage
+COPY --from=build /app/build/libs/kanji-master-0.0.1-SNAPSHOT.jar /app/app.jar
+
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]
