@@ -29,6 +29,28 @@ type KanjiInfo {
     partOf: String!
 }
 
+type Sentence {
+    id: Int!
+    japanese: String!
+    english: String!
+    particle: String!
+    word: String!
+    kanji: String!
+    furigana: String!
+    obi2: String!
+}
+
+type SentencePage {
+    content: [Sentence]
+    totalPages: Int
+    totalElements: Int
+    last: Boolean
+    size: Int
+    number: Int
+    numberOfElements: Int
+    first: Boolean
+}
+
 type KanjiInfoPage {
     content: [KanjiInfo]
     totalPages: Int
@@ -46,9 +68,16 @@ type RadicalSearchOption {
     isSimplifiedRadical: Boolean!
 }
 
+input KanjiFilter {
+    search: String
+    grade: [String]
+    jlpt: [String]
+}
+
 type Query {
-    getKanjis(page: Int, size: Int): KanjiInfoPage!
+    getKanjis(page: Int, size: Int, filter: KanjiFilter): KanjiInfoPage!
     getKanji(kanji: String): KanjiInfo!
     getRadicalSearchOptionDto: [RadicalSearchOption]
     getKanjiesByRadical(radicals: [String]): [KanjiInfo]
+    getSentencesByKanji(page: Int, size: Int, kanji: String): SentencePage!
 }

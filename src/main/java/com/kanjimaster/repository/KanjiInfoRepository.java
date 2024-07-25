@@ -21,4 +21,7 @@ public interface KanjiInfoRepository extends JpaRepository<KanjiInfo, String>, J
             "HAVING COUNT(DISTINCT st.term) = (SELECT COUNT(*) FROM search_terms)",
             nativeQuery = true)
     Collection<KanjiInfo> findKanjiesByRadicals(@Param("radicals") String[] radicals);
+
+
+
 }
