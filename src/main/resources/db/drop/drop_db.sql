@@ -7,3 +7,4 @@ drop table if exists sentence cascade;
 drop table if exists search cascade;
 drop table if exists look_likes cascade;
 drop table if exists antonym cascade;
+drop table if exists word cascade;
