@@ -22,18 +22,15 @@ spring:
 
   main:
     allow-circular-references: true
-#  flyway:
-#    baselineOnMigrate: true
-#    validateOnMigrate: false
-#    locations: classpath:db/migration
-#    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:kanji-master}
-#    user: kanji-master
-#    password: kanji-master
-#    schemas: kanji-master
-
 
 server:
   port : ${PORT:8080}
+
+openai:
+  model: 'gpt-4o-mini'
+  api:
+    url: 'https://api.openai.com/v1/chat/completions'
+    key: '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'
 
 logging:
   level:

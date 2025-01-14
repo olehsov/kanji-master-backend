@@ -35,6 +35,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
 	implementation 'org.springframework.boot:spring-boot-starter-json'
 	implementation 'org.springframework.boot:spring-boot-starter-data-rest'
+	implementation 'com.theokanning.openai-gpt3-java:service:0.18.2'
 	implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.1'
 	implementation 'org.postgresql:postgresql'
 	implementation 'org.springframework.data:spring-data-jpa'
@@ -49,6 +50,7 @@ dependencies {
 	testImplementation 'io.projectreactor:reactor-test'
 	testImplementation 'org.springframework.graphql:spring-graphql-test'
 	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 }
 
 tasks.named('test') {

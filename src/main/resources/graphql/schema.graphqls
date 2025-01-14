@@ -74,10 +74,17 @@ input KanjiFilter {
     jlpt: [String]
 }
 
+type Topic {
+    id: ID!
+    header: String!
+    description: String!
+}
+
 type Query {
     getKanjis(page: Int, size: Int, filter: KanjiFilter): KanjiInfoPage!
     getKanji(kanji: String): KanjiInfo!
     getRadicalSearchOptionDto: [RadicalSearchOption]
     getKanjiesByRadical(radicals: [String]): [KanjiInfo]
     getSentencesByKanji(page: Int, size: Int, kanji: String): SentencePage!
+    getAllTopics: [Topic]!
 }
