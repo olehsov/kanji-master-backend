@@ -21,7 +21,7 @@ spring:
       enabled: true
   ai:
     openai:
-      api-key: "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"
+      api-key: ${OPENAI_API_TOKEN}
       base-url: https://api.openai.com/
       chat:
         options:
