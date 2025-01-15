@@ -80,6 +80,37 @@ type Topic {
     description: String!
 }
 
+type GrammarTopic {
+    header: String
+    formation: String
+    exampleSentences: [ExampleSentence!]!
+    tasks: [Task!]!
+}
+
+type ExampleSentence {
+    sentence: String!
+    translation: String!
+}
+
+type Task {
+    taskType: TaskType!
+    description: String!
+    question: String!
+    correctAnswer: String!
+    resources: [String!]!
+}
+
+enum TaskType {
+    CONVERT_TO_FORMATION
+    TRANSLATE_TO_JAPANESE
+    FILL_IN_THE_BLANKS
+}
+
+input GrammarSettingPayload {
+    type: String
+    taskAmount: Int
+}
+
 type Query {
     getKanjis(page: Int, size: Int, filter: KanjiFilter): KanjiInfoPage!
     getKanji(kanji: String): KanjiInfo!
@@ -87,4 +118,5 @@ type Query {
     getKanjiesByRadical(radicals: [String]): [KanjiInfo]
     getSentencesByKanji(page: Int, size: Int, kanji: String): SentencePage!
     getAllTopics: [Topic]!
+    getTopicTask(topicId: Int, settings: [GrammarSettingPayload]): GrammarTopic!
 }

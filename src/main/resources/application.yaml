@@ -12,34 +12,115 @@ spring:
     url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:kanji-master}
     username: ${DB_USER:kanji-master}
     password: ${DB_PASSWORD:kanji-master}
-    driverClassName: org.postgresql.Driver
+    driver-class-name: org.postgresql.Driver
   sql:
     init:
       platform: postgres
   graphql:
     graphiql:
       enabled: true
-
+  ai:
+    openai:
+      api-key: "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"
+      base-url: https://api.openai.com/
+      chat:
+        options:
+          model: gpt-4o
+          response-format:
+            type: JSON_SCHEMA
+            name: JapaneseTaskBuilder
+            schema: >
+              {
+                "type": "object",
+                "properties": {
+                  "formation": {
+                    "type": "string",
+                    "description": "Formation of specific Japanese grammar topic. Prettify by using html"
+                  },
+                  "exampleSentences": {
+                    "type": "array",
+                    "description": "Example sentences in specific Japanese grammar topic.",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "sentence": {
+                          "type": "string",
+                          "description": "Example sentence in specific Japanese grammar topic"
+                        },
+                        "translation": {
+                          "type": "string",
+                          "description": "Translation of the sentence"
+                        }
+                      },
+                      "required": [
+                        "sentence",
+                        "translation"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "tasks": {
+                    "type": "array",
+                    "description": "A collection of language tasks relevant to the topic.",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "taskType": {
+                          "type": "string",
+                          "description": "The type of task to be performed.",
+                          "enum": [
+                            "CONVERT_TO_FORMATION",
+                            "TRANSLATE_TO_JAPANESE",
+                            "FILL_IN_THE_BLANKS"
+                          ]
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "A brief description of the task. Should be in English"
+                        },
+                        "question": {
+                          "type": "string",
+                          "description": "A question that relate its type."
+                        },
+                        "correctAnswer": {
+                          "type": "string",
+                          "description": "A correct answer to the question."
+                        },
+                        "resources": {
+                          "type": "array",
+                          "description": "Links or materials that can assist with the task.",
+                          "items": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "required": [
+                        "taskType",
+                        "description",
+                        "question",
+                        "correctAnswer",
+                        "resources"
+                      ],
+                      "additionalProperties": false
+                    }
+                  }
+                },
+                "required": [
+                  "formation",
+                  "exampleSentences",
+                  "tasks"
+                ],
+                "additionalProperties": false
+              }
   main:
     allow-circular-references: true
 
 server:
-  port : ${PORT:8080}
-
-openai:
-  model: 'gpt-4o-mini'
-  api:
-    url: 'https://api.openai.com/v1/chat/completions'
-    key: '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'
+  port: ${PORT:8080}
 
 logging:
   level:
-    org:
-      hibernate:
-        SQL: DEBUG
-        type:
-          descriptor:
-            sql:
-              BasicBinder: TRACE
-
-
+    org.springframework.web.client: DEBUG
+    org.springframework.web.reactive.function.client: DEBUG
+    org.apache.http: DEBUG
+    org.apache.http.wire: DEBUG
