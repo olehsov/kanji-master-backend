@@ -17,6 +17,13 @@ configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
 	}
+	all {
+		exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging' // logback
+		exclude group: 'ch.qos.logback', module: 'logback-classic'
+		exclude group: 'ch.qos.logback', module: 'logback-core'
+		exclude group: 'org.apache.logging.log4j', module: 'log4j-to-slf4j'
+		exclude group: 'org.slf4j', module: 'jul-to-slf4j'
+	}
 }
 
 repositories {
@@ -30,16 +37,19 @@ ext {
 }
 
 dependencies {
+	implementation("com.itextpdf:itext-core:9.1.0")
+	implementation("com.itextpdf:font-asian:9.1.0")
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-graphql'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
 	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
-	implementation 'org.springframework.boot:spring-boot-starter-json'
 	implementation 'org.springframework.boot:spring-boot-starter-data-rest'
+	implementation 'org.springframework.ai:spring-ai-core:1.0.0-M5'
 	implementation 'org.springframework.ai:spring-ai-openai:1.0.0-M5'
-	implementation 'org.springframework.ai:spring-ai-openai-spring-boot-starter:1.0.0-SNAPSHOT'
-	implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.1'
+	implementation 'org.springframework.ai:spring-ai-openai-spring-boot-starter:1.0.0-M5'
+	implementation 'org.springframework.boot:spring-boot-starter-log4j2'
+	implementation 'net.ttddyy:datasource-proxy:1.7'
 	implementation 'org.postgresql:postgresql'
 	implementation 'org.springframework.data:spring-data-jpa'
 	implementation 'javax.xml.bind:jaxb-api:2.3.1'

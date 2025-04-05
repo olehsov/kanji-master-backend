@@ -16,4 +16,6 @@ INSERT INTO TOPIC (header, description) VALUES
     ('Causative Form (使役形)', 'Study how to express causation, such as making someone do something. Example: 食べさせる (tabesaseru) - to make someone eat.'),
     ('Conditionals (条件形)', 'Explore how to express conditions using forms like と, ば, たら, and なら. Example: 雨が降ったら、行きません (ame ga futtara, ikimasen) - If it rains, I won’t go.'),
     ('Negative Forms', 'Learn how to make negative forms of verbs, adjectives, and nouns. Example: 食べない (tabenai) - not eat.'),
+    ('Potential Form (可能形 - かのうけい)', 'Used to express the ability to do something.'),
+    ('Using の to Nominalize Verbs', 'の is often used in casual speech and focuses more on sensory perception, personal experiences, or direct observations.'),
     ('Relative Clauses', 'Understand how to use relative clauses to modify nouns. Example: 私が好きな本 (watashi ga suki na hon) - the book I like.');

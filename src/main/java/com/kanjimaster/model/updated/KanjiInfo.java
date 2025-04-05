@@ -1,9 +1,9 @@
 package com.kanjimaster.model.updated;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "KANJI_INFO")
@@ -33,4 +33,13 @@ public class KanjiInfo {
     private String elements;
     private String kanjiParts;
     private String partOf;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "kanji_word",
+            joinColumns = @JoinColumn(name = "kanji"),
+            inverseJoinColumns = @JoinColumn(name = "word_id")
+    )
+    @OrderBy("freq DESC")
+    private List<Word> words;
 }

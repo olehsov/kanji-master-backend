@@ -12,7 +12,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import javax.validation.constraints.NotNull;
 import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 public class KanjiInfoInfoServiceImpl implements KanjiInfoService {
@@ -39,20 +42,43 @@ public class KanjiInfoInfoServiceImpl implements KanjiInfoService {
 
         if (Objects.isNull(filter))
             return kanjiInfoRepository.findAll(pageable);
-        List<String> kanjiList = Collections.emptyList();
-        if (Objects.nonNull(filter.getSearch()))
-            kanjiList = searchRepository.findAllKanjiBySearch(filter.getSearch());
+        return kanjiInfoRepository.findAll(getKanjiSpecByNonEmptyFilter(filter), pageable);
+    }
 
-        Specification<KanjiInfo> specification = new KanjiInfoSpecificationsBuilder(
-                Optional.ofNullable(filter.getGrade()).orElse(Collections.emptyList()),
-                Optional.ofNullable(filter.getJlpt()).orElse(Collections.emptyList()),
-                kanjiList
-        ).build();
-        return kanjiInfoRepository.findAll(specification, pageable);
+    @Override
+    public Map<KanjiInfo, String> getKanjiesByFilterWithWordRep(KanjiFilterDdo filter) throws Exception {
+        List<KanjiInfo> kanjiInfos = getKanjiInfosByFilter(filter);
+        List<String> kanjies = kanjiInfos.stream().map(KanjiInfo::getKanji).toList();
+
+        Map<String, String> kanjiWordRepMap = kanjiInfoRepository.findKanjiWordRepresentations(kanjies).stream()
+                 .collect(Collectors.toMap(row -> (String) row[0], row -> (String) row[1]));
+        return kanjiInfos.stream().collect(Collectors.toMap(
+                Function.identity(),
+                kanjiInfo -> kanjiWordRepMap.get(kanjiInfo.getKanji())
+        ));
     }
 
     @Override
     public Collection<KanjiInfo> getKanjiesByRadical(Set<String> radicals) {
         return kanjiInfoRepository.findKanjiesByRadicals(radicals.toArray(new String[0]));
+    }
+
+
+    private List<KanjiInfo> getKanjiInfosByFilter(KanjiFilterDdo filter) throws Exception {
+        if (Objects.isNull(filter))
+            return kanjiInfoRepository.findAll();
+        return kanjiInfoRepository.findAll(getKanjiSpecByNonEmptyFilter(filter));
+    }
+
+    private Specification<KanjiInfo> getKanjiSpecByNonEmptyFilter(@NotNull KanjiFilterDdo filter) throws Exception {
+        List<String> kanjiList = Collections.emptyList();
+        if (Objects.nonNull(filter.getSearch()))
+            kanjiList = searchRepository.findAllKanjiBySearch(filter.getSearch());
+
+        return new KanjiInfoSpecificationsBuilder(
+                Optional.ofNullable(filter.getGrade()).orElse(Collections.emptyList()),
+                Optional.ofNullable(filter.getJlpt()).orElse(Collections.emptyList()),
+                kanjiList
+        ).build();
     }
 }
