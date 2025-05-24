@@ -18,7 +18,7 @@ public class SearchCriteria {
     public static SearchCriteria searchCriteriaFactory(String key, FilterType type, Object value) throws Exception {
         if (type.equals(FilterType.BETWEEN) && value != null && value.getClass().getComponentType() == List.class) {
             String typeName = value.getClass().getTypeName();
-            throw new Exception("Only array is allowed with `BETWEEN` operator, а у вас " + typeName);
+            throw new Exception("З операторм `BETWEEN` доступні тільки массиви, а у вас " + typeName);
         }
         return new SearchCriteria(key, type, value);
     }

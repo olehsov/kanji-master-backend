@@ -7,15 +7,21 @@ CREATE TABLE TOPIC (
 );
 
 INSERT INTO TOPIC (header, description) VALUES
-    ('Passive Voice (受身形)', 'Learn how to use the passive form in Japanese to indicate actions done by someone else. Example: 食べられる (taberareru) - to be eaten.'),
-    ('Te-Form (て形)', 'Master the te-form, which is essential for connecting verbs and forming various grammatical patterns. Example: 食べて (tabete) - eat and...'),
-    ('Keigo (敬語)', 'Understand the honorific language used to show respect in Japanese, including 尊敬語 (sonkeigo) and 謙譲語 (kenjōgo).'),
-    ('Casual and Polite Forms', 'Switch between the casual and polite forms of Japanese, such as です/ます versus dictionary forms. Example: 食べる (taberu) vs. 食べます (tabemasu).'),
-    ('Conjugation of Adjectives', 'Learn to conjugate Japanese adjectives, including い-adjectives and な-adjectives. Example: 高い (takai) - high, 高くない (takakunai) - not high.'),
-    ('Particles (助詞)', 'Understand the role of particles like が, を, で, に, and their uses in sentences. Example: 猫がいる (neko ga iru) - There is a cat.'),
-    ('Causative Form (使役形)', 'Study how to express causation, such as making someone do something. Example: 食べさせる (tabesaseru) - to make someone eat.'),
-    ('Conditionals (条件形)', 'Explore how to express conditions using forms like と, ば, たら, and なら. Example: 雨が降ったら、行きません (ame ga futtara, ikimasen) - If it rains, I won’t go.'),
-    ('Negative Forms', 'Learn how to make negative forms of verbs, adjectives, and nouns. Example: 食べない (tabenai) - not eat.'),
-    ('Potential Form (可能形 - かのうけい)', 'Used to express the ability to do something.'),
-    ('Using の to Nominalize Verbs', 'の is often used in casual speech and focuses more on sensory perception, personal experiences, or direct observations.'),
-    ('Relative Clauses', 'Understand how to use relative clauses to modify nouns. Example: 私が好きな本 (watashi ga suki na hon) - the book I like.');
+    ('Пасивна форма (受身形)', 'Вивчіть, як використовувати пасивну форму в японській мові для вираження дій іншими. Наприклад: 食べられる (taberareru) — бути з’їденим.'),
+    ('Форма て (て形)', 'Опануйте форму て — вона необхідна для поєднання дієслів та утворення різних граматичних конструкцій. Наприклад: 食べて (tabete) — з’їж та...'),
+    ('Кейґо (敬語)', 'Зрозумійте правила вживання ввічливої мови: поважна (尊敬語) та скромна (謙譲語) форми.'),
+    ('Повсякденна та ввічлива форми', 'Переходьте між неофіційною та офіційною мовою: наприклад, 食べる (taberu) vs. 食べます (tabemasu).'),
+    ('Відмінювання прикметників', 'Вивчайте, як відмінювати い-прикметники та な-прикметники. Наприклад: 高い (takai) — високий, 高くない (takakunai) — невисокий.'),
+    ('Частки (助詞)', 'Розберіться з частками が, を, で, に та їх використанням у реченнях. Наприклад: 猫がいる (neko ga iru) — Є кіт.'),
+    ('Причинна форма (使役形)', 'Виражайте примус чи дозвіл: Наприклад, 食べさせる (tabesaseru) — змусити когось їсти.'),
+    ('Умовні конструкції (条件形)', 'Вивчайте форми умовності: と, ば, たら, なら. Наприклад: 雨が降ったら、行きません — Якщо піде дощ, я не піду.'),
+    ('Заперечні форми', 'Вивчайте заперечення дієслів, прикметників і іменників. Наприклад: 食べない — не їсти.'),
+    ('Потенційна форма (可能形)', 'Вказує на здатність виконати дію. Наприклад: 読める (yomeru) — можу читати.'),
+    ('Номіналізація за допомогою の', 'の використовується для перетворення дієслів у іменники, особливо в розмовній мові.'),
+    ('Відносні речення', 'Вивчіть, як змінювати іменники за допомогою підрядних речень. Наприклад: 私が好きな本 — книга, яка мені подобається.'),
+    ('Порядок слів у реченні', 'Основний порядок: підмет + додаток + присудок. Важливо для розуміння структури мови.'),
+    ('Числівники та лічильники', 'Як правильно рахувати об\`єкти в японській мові: 本 для книг, 人 для людей тощо.'),
+    ('Запитання в японській мові', 'Як утворювати питання, використовуючи частку か. Наприклад: これは何ですか？'),
+    ('Дієслова стану', 'Наприклад: 知っている (shitteiru) — знати; 住んでいる (sundeiru) — жити (десь).'),
+    ('Вживання は та が', 'Різниця між темою (は) та підметом (が) в реченні.'),
+    ('Формальна мова в письмі', 'Стилістичні особливості письмового мовлення: 敬語 + інші вирази.');

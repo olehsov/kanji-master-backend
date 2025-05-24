@@ -23,6 +23,7 @@ public class TopicServiceImpl implements TopicService {
 
     @Override
     public Topic findById(Long id) {
-        return topicRepository.findById(id).orElseThrow(() -> new RuntimeException("No topic with id " + id + " found"));
+        return topicRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Жодного топыку з айді " + id + " не знайдено"));
     }
 }
