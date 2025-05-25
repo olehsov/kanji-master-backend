@@ -16,7 +16,8 @@ public class CorsConfig {
     private final List<String> ALLOWED_HEADERS;
 
     public CorsConfig() {
-        this.ALLOWED_ORIGINS = List.of("http://localhost:4200", "https://kanji-master-frontend-2sumyipbsq-uc.a.run.app");
+        this.ALLOWED_ORIGINS = List.of("http://localhost:4200", "https://kanji-master-frontend-2sumyipbsq-uc.a.run.app",
+                "https://kanji-master-frontend-695666739311.us-central1.run.app/");
         this.ALLOWED_METHODS = List.of(HttpMethod.GET.name(), HttpMethod.POST.name());
         this.ALLOWED_HEADERS = List.of("*");
     }
