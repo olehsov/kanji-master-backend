@@ -7,5 +7,6 @@ create table word
     romaji_display TEXT,
     freq INTEGER,
     is_self_supporting BOOLEAN,
+    translation TEXT,
     primary key(id)
 );

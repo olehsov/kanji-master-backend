@@ -5,8 +5,6 @@ import org.springframework.beans.factory.SmartInitializingSingleton;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.io.IOException;
-
 @Configuration
 public class KanjiConfig {
     private final WordDataInitializer wordDataInitializer;
@@ -20,7 +18,7 @@ public class KanjiConfig {
         return () -> {
             try {
                 wordDataInitializer.initialize();
-            } catch (IOException e) {
+            } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         };

@@ -27,6 +27,17 @@ type KanjiInfo {
     elements: String!
     kanjiParts: String!
     partOf: String!
+    words: [Word!]!
+}
+
+type Word {
+    id: ID!
+    word: String
+    yomiDisplay: String
+    romajiDisplay: String
+    freq: Int
+    isSelfSupporting: Boolean
+    translation: String
 }
 
 type Sentence {

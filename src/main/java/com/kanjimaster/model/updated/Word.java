@@ -29,4 +29,7 @@ public class Word {
 
     @Column(name = "is_self_supporting")
     private boolean isSelfSupporting;
+
+    @Column(name = "translation")
+    private String translation;
 }

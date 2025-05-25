@@ -1,6 +1,7 @@
 package com.kanjimaster.controller;
 
 import com.kanjimaster.dto.KanjiFilterDdo;
+import com.kanjimaster.dto.KanjiInfoDto;
 import com.kanjimaster.model.updated.KanjiInfo;
 import com.kanjimaster.service.KanjiInfoService;
 import org.springframework.data.domain.Page;
@@ -26,7 +27,7 @@ public class KanjiController {
     }
 
     @QueryMapping
-    public Mono<KanjiInfo> getKanji(@Argument String kanji) {
+    public Mono<KanjiInfoDto> getKanji(@Argument String kanji) {
         return Mono.just(kanjiInfoService.getKanji(kanji));
     }
 

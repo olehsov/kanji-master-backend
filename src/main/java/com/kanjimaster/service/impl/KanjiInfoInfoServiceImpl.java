@@ -1,6 +1,7 @@
 package com.kanjimaster.service.impl;
 
 import com.kanjimaster.dto.KanjiFilterDdo;
+import com.kanjimaster.dto.KanjiInfoDto;
 import com.kanjimaster.filter.builders.KanjiInfoSpecificationsBuilder;
 import com.kanjimaster.model.updated.KanjiInfo;
 import com.kanjimaster.repository.KanjiInfoRepository;
@@ -32,8 +33,13 @@ public class KanjiInfoInfoServiceImpl implements KanjiInfoService {
     }
 
     @Override
-    public KanjiInfo getKanji(String kanji) {
-        return kanjiInfoRepository.getReferenceById(kanji);
+    public List<KanjiInfo> save(List<KanjiInfo> kanji) {
+        return kanjiInfoRepository.saveAll(kanji);
+    }
+
+    @Override
+    public KanjiInfoDto getKanji(String kanji) {
+        return KanjiInfoDto.fromKanjiInfo(kanjiInfoRepository.getReferenceById(kanji));
     }
 
     @Override
