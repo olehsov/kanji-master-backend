@@ -1,20 +1,18 @@
-# Stage 1: Build
-FROM gradle:8.7.0-jdk17 as build
-
+FROM gradle:8.7.0-jdk17 AS build
 WORKDIR /app
 
-# Copy the source code to the container
 COPY . .
-RUN gradle wrapper
-# Build the application
-RUN ./gradlew bootJar
+# You do NOT need to generate wrapper inside the container if ./gradlew is already in repo
+# RUN gradle wrapper
+
+RUN ./gradlew --no-daemon clean bootJar
 
 # Stage 2: Run
-FROM openjdk:17
+FROM eclipse-temurin:17-jre
+WORKDIR /app
 
 EXPOSE 8000
 
-# Copy the jar file from the build stage
-COPY --from=build /app/build/libs/kanji-master-0.0.1-SNAPSHOT.jar /app/app.jar
+COPY --from=build /app/build/libs/*.jar app.jar
 
 ENTRYPOINT ["java", "-jar", "/app/app.jar"]
