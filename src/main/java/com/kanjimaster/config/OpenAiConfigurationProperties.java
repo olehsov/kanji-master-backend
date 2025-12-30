@@ -14,6 +14,7 @@ public class OpenAiConfigurationProperties {
     private String baseUrl;
     private ChatOptions chat;
     private ChatOptions chatTranscriptAudio;
+    private ChatOptions chatSubtitle;
 
     @Data
     public static class ChatOptions {
@@ -39,5 +40,8 @@ public class OpenAiConfigurationProperties {
 
     public void setChatTranscriptAudio(Chat chat) {
         this.chatTranscriptAudio = chat.options;
+    }
+    public void setChatSubtitle(Chat chat) {
+        this.chatSubtitle = chat.options;
     }
 }

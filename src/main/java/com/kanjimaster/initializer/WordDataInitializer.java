@@ -1,8 +1,28 @@
 package com.kanjimaster.initializer;
 
+import com.kanjimaster.dto.KanjiFilterDdo;
+import com.kanjimaster.model.updated.KanjiInfo;
+import com.kanjimaster.model.updated.Word;
+import com.kanjimaster.service.KanjiInfoService;
 import com.kanjimaster.service.WordService;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestTemplate;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 @Component
 @Log4j2
@@ -13,17 +33,16 @@ public class WordDataInitializer {
         this.wordService = wordService;
     }
 
-    public void initialize() throws Exception {}
 
+    public void initialize() throws Exception {}
+//
 //    @Transactional
 //    public void initialize() throws Exception {
-//        int page = 0;
+//        List<Word> wordList = wordService.findAllWithNoTranslation();
 //        while (true) {
-//            List<Word> words = wordService.getWordPage(page, 128).getContent();
-//            log.error("PAGE {} ITEMS COMPLETED {} OF 100553", page, (page + 1) * 128);
-//            if (words.isEmpty()) {
-//                break;
-//            }
+//
+//            List<Word> words = wordList.subList(0, Math.min(128, wordList.size()));
+//            log.error("{} ITEM LEFT", wordList.size());
 //            List<String> texts = words.stream().map(Word::getWord).toList();
 //            List<String> translations = batchTranslate(texts, "ja", "uk");
 //            log.error(translations);
@@ -31,8 +50,12 @@ public class WordDataInitializer {
 //                words.get(i).setTranslation(translations.get(i));
 //            }
 //            wordService.save(words);
-//            page += 1;
 //            log.error("TEXTS {}, TRANSLATIONS {}", texts.size(), translations.size());
+//
+//            wordList.removeAll(new ArrayList<>(words));
+//            if (wordList.isEmpty()) {
+//                break;
+//            }
 //        }
 //
 //    }

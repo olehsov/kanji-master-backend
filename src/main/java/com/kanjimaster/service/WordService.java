@@ -9,6 +9,7 @@ import java.util.List;
 public interface WordService {
     boolean isEmpty();
     List<Word> save(List<Word> words);
+    List<Word> findAllWithNoTranslation();
     Page<Word> getWordPage(int page, int size) throws Exception;
 
 }

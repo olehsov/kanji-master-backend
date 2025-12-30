@@ -1,7 +1,7 @@
 spring:
   jpa:
     database: POSTGRESQL
-    show-sql: true
+    show-sql: false
     properties:
       hibernate:
         format_sql: true
@@ -122,129 +122,108 @@ spring:
       chat-transcript-audio:
         options:
           model: 'whisper-1'
+
+      chat-subtitle:
+        options:
+          model: gpt-4o
           response-format:
             type: JSON_SCHEMA
             name: JapaneseTranscriptBuilder
             schema: >
               {
-                "type": "object",
-                "properties": {
-                  "lyric": {
-                    "type": "string",
-                    "description": "The lyrics from the audio, plain text "
-                  },
-                  "slices": {
-                    "type": "array",
-                    "description": "The 10 second subtitle slices of lyric",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "kanjies": {
-                          "type": "array",
-                          "description": "The kanjies from the slice"
-                        },
-                        "text": {
-                          "type": "string",
-                          "description": "The plain text of the slice"
-                        },
-                        "textHiragana": {
-                          "type": "string",
-                          "description": "The plain text of the slice in hiragana"
-                        },
-                        "startTime": {
-                          "type": "string",
-                          "description": "The start time of the slice in following format mm:ss:ms"
-                        },
-                        "endTime": {
-                          "type": "string",
-                          "description": "The end time of the slice in following format mm:ss:ms"
-                        },
-                        "details": {
-                          "type": "array",
-                          "description": "The words and phrases the slice consists of",
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "text": {
-                                "type": "string",
-                                "description": "The word or phrase the slice consists of"
+                  "type": "object",
+                  "properties": {
+                    "subtitles": {
+                      "type": "array",
+                      "description": "List of subtitle lines with timing and translations.",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "index": {
+                            "type": "integer",
+                            "description": "The sequential index of the subtitle line."
+                          },
+                          "timingStart": {
+                            "type": "string",
+                            "description": "The start timing of the subtitle in the format 'HH:MM:SS,MS'."
+                          },
+                          "timingEnd": {
+                            "type": "string",
+                            "description": "The end timing of the subtitle in the format 'HH:MM:SS,MS'."
+                          },
+                          "line": {
+                            "type": "string",
+                            "description": "The original subtitle line in Japanese."
+                          },
+                          "translation": {
+                            "type": "string",
+                            "description": "The complete translation of the line in Ukrainian."
+                          },
+                          "kanjies": {
+                            "type": "string",
+                            "description": "List of kanji that used in the subtitle, joined by coma"
+                          },
+                          "grammars": {
+                            "type": "string",
+                            "description": "List of grammars that used in the subtitle, joined by coma"
+                          },
+                          "individualTranslations": {
+                            "type": "array",
+                            "description": "Translations of each kanji or phrase used in the line.",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "text": {
+                                  "type": "string",
+                                  "description": "The word or phrase"
+                                },
+                                "textHiragana": {
+                                  "type": "string",
+                                  "description": "The word or phrase in Hiragana"
+                                },
+                                "meaning": {
+                                  "type": "string",
+                                  "description": "Meaning of the word or phrase"
+                                },
+                                "isWord": {
+                                  "type": "boolean",
+                                  "description": "Is it word"
+                                },
+                                "jlpt": {
+                                  "type": "string",
+                                  "description": "JLPT score from N1 to N5"
+                                }
                               },
-                              "textHiragana": {
-                                "type": "string",
-                                "description": "The word or phrase the slice consists of. In hiragana"
-                              },
-                              "meaning": {
-                                "type": "string",
-                                "description": "The word or phrase means"
-                              },
-                              "isWord": {
-                                "type": "boolean",
-                                "description": "Is it word"
-                              },
-                              "jlpt": {
-                                "type": "string",
-                                "description": "JLPT score from N1 to N5"
-                              }
-                            },
-                            "required": [
-                              "text",
-                              "textHiragana",
-                              "meaning",
-                              "isWord",
-                              "jlpt"
-                            ],
-                            "additionalProperties": false
+                              "required": [
+                                "text",
+                                "textHiragana",
+                                "meaning",
+                                "isWord",
+                                "jlpt"
+                              ],
+                              "additionalProperties": false
+                            }
                           }
                         },
-                        "grammars": {
-                          "type": "array",
-                          "description": "The grammars used in the the slice",
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "name": {
-                                "type": "string",
-                                "description": "The grammar name"
-                              },
-                              "explanation": {
-                                "type": "string",
-                                "description": "Short explanation of the grammar"
-                              },
-                              "example": {
-                                "type": "string",
-                                "description": "Example of the grammar"
-                              }
-                            }
-                          },
-                          "required": [
-                            "name",
-                            "explanation",
-                            "example"
-                          ],
-                          "additionalProperties": false
-                        },
                         "required": [
+                          "index",
+                          "timingStart",
+                          "timingEnd",
+                          "line",
+                          "translation",
                           "kanjies",
-                          "text",
-                          "textHiragana",
-                          "type",
-                          "endTime",
-                          "details",
-                          "grammars"
+                          "grammars",
+                          "individualTranslations"
                         ],
                         "additionalProperties": false
                       }
                     }
                   },
                   "required": [
-                    "formation",
-                    "exampleSentences",
-                    "tasks"
+                    "subtitles"
                   ],
                   "additionalProperties": false
                 }
-              }
-
   servlet.multipart:
       max-file-size: 500MB
       max-request-size: 500MB

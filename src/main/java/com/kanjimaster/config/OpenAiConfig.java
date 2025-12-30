@@ -12,6 +12,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.ResponseErrorHandler;
 import org.springframework.web.client.RestClient;
 
+import static com.kanjimaster.constant.OpenAiConstants.JAPANESE_TASK_BUILDER;
+import static com.kanjimaster.constant.OpenAiConstants.JAPANESE_TRANSCRIPT_BUILDER;
+
 @Configuration
 public class OpenAiConfig {
     private final OpenAiConfigurationProperties openAiConfigurationProperties;
@@ -31,10 +34,33 @@ public class OpenAiConfig {
                 restBuilder, responseErrorHandler);
     }
 
-    @Bean
+    @Bean(JAPANESE_TASK_BUILDER)
     public OpenAiChatModel openAiChatModel(OpenAiApi openAiApi) {
         OpenAiConfigurationProperties.ChatOptions chatOptions = openAiConfigurationProperties.getChat();
+        return buildChartModelWithJsonSchema(openAiApi, chatOptions);
+    }
 
+    @Bean(JAPANESE_TRANSCRIPT_BUILDER)
+    public OpenAiChatModel openAiChatModelSubtitleSchema(OpenAiApi openAiApi) {
+        OpenAiConfigurationProperties.ChatOptions chatOptions = openAiConfigurationProperties.getChatSubtitle();
+        return buildChartModelWithJsonSchema(openAiApi, chatOptions);
+    }
+
+    @Bean()
+    public OpenAiAudioTranscriptionModel openAiAudioTranscriptionModel(OpenAiAudioApi openAiAudioApi) {
+        OpenAiConfigurationProperties.ChatOptions chatOptions = openAiConfigurationProperties.getChatTranscriptAudio();
+
+        OpenAiAudioTranscriptionOptions options = OpenAiAudioTranscriptionOptions.builder()
+                .model(chatOptions.getModel())
+                .responseFormat(OpenAiAudioApi.TranscriptResponseFormat.SRT)
+                .language("ja")
+                .temperature(0.3f)
+                .build();
+
+        return new OpenAiAudioTranscriptionModel(openAiAudioApi, options);
+    }
+
+    private OpenAiChatModel buildChartModelWithJsonSchema(OpenAiApi openAiApi, OpenAiConfigurationProperties.ChatOptions chatOptions) {
         ResponseFormat.JsonSchema schema = ResponseFormat.JsonSchema.builder()
                 .name(chatOptions.getResponseFormat().getName())
                 .schema(chatOptions.getResponseFormat().getSchema())
@@ -54,19 +80,5 @@ public class OpenAiConfig {
                 .temperature(0.3d)
                 .build();
         return new OpenAiChatModel(openAiApi, options);
-    }
-
-    @Bean
-    public OpenAiAudioTranscriptionModel openAiAudioTranscriptionModel(OpenAiAudioApi openAiAudioApi) {
-        OpenAiConfigurationProperties.ChatOptions chatOptions = openAiConfigurationProperties.getChatTranscriptAudio();
-
-        OpenAiAudioTranscriptionOptions options = OpenAiAudioTranscriptionOptions.builder()
-                .model(chatOptions.getModel())
-                .responseFormat(OpenAiAudioApi.TranscriptResponseFormat.SRT)
-                .language("ja")
-                .temperature(0.3f)
-                .build();
-
-        return new OpenAiAudioTranscriptionModel(openAiAudioApi, options);
     }
 }
