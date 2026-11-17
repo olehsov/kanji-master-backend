@@ -81,6 +81,9 @@ Docs UIs are on by default; set `KANJI_DOCS_ENABLED=false` to turn off GraphiQL,
 | `OPENAI_API_TOKEN` | – | Whisper; required when provider is not `stub` |
 | `KANJI_DOCS_ENABLED` | `true` | GraphiQL, schema printer, Swagger |
 
+Local secrets: `.env` (from `.env.template`, used by docker compose) or `application-local.yaml` (from
+`src/main/resources/application-local.yaml.template`, profile `local`). Both are git-ignored; never commit keys.
+
 CORS origins: `kanji.cors.allowed-origins` in `application.yaml` (no trailing slash).
 
 ## Database & migrations

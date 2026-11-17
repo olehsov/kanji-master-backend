@@ -33,6 +33,10 @@ To run from the IDE or Gradle, start only the database (`docker compose up db`) 
 ```
 
 ## Configuration
+Local secrets never go into git: copy `.env.template` to `.env` (read by docker compose) or
+`src/main/resources/application-local.yaml.template` to `application-local.yaml` and run with
+`./gradlew bootRun --args='--spring.profiles.active=local'`. Both copies are git-ignored.
+
 | Env var | Default | Description |
 |---|---|---|
 | `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER`, `DB_PASSWORD` | `localhost`, `5432`, `kanji-master` | PostgreSQL |

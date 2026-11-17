@@ -36,3 +36,11 @@ data/
 
 ### IDE ###
 *.iml
+.vscode/
+
+### Local configuration & secrets (copy from the *.template files) ###
+.env
+src/main/resources/application-local.yaml
+
+### Claude Code personal settings ###
+.claude/settings.local.json
