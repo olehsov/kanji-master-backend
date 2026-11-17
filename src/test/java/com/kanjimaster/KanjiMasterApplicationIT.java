@@ -77,6 +77,13 @@ class KanjiMasterApplicationIT {
     }
 
     @Test
+    void searchByKanjiCharacterFindsIt() {
+        graphQlTester.document("{ getKanjis(filter: {search: \"人\"}) { content { kanji } } }")
+                .execute()
+                .path("getKanjis.content[*].kanji").entityList(String.class).contains("人");
+    }
+
+    @Test
     void grammarTaskReturnsStubLesson() {
         graphQlTester.document("""
                         { getTopicTask(topicId: 1, settings: [{type: FILL_IN_THE_BLANKS, taskAmount: 3}]) {

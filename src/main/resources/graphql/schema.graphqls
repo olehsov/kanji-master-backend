@@ -25,7 +25,7 @@ type Query {
 
 "Filter for kanji lists and the PDF endpoint. Empty lists mean no constraint."
 input KanjiFilter {
-    "Reading in kana or romaji (matched against the SEARCH table)."
+    "Kanji typed directly (e.g. 人 or 日本 matches each kanji) or a reading in kana/romaji (matched against the SEARCH table)."
     search: String
     "Grades exactly as stored, e.g. \"Kyōiku-Jōyō (1st grade of primary school)\"."
     grade: [String]

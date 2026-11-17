@@ -98,6 +98,21 @@ class KanjiInfoServiceImplTest {
     }
 
     @Test
+    void kanjiTypedDirectlyMatchesItself() {
+        when(searchRepository.findAllKanjiBySearch("人")).thenReturn(List.of());
+        Page<KanjiInfo> page = new PageImpl<>(List.of(TestData.kanji("人", 5)));
+        when(kanjiInfoRepository.findAll(any(Specification.class), any(Pageable.class))).thenReturn(page);
+
+        assertThat(service.getKanjiPage(0, 20, KanjiFilterDto.builder().search("人").build())).isSameAs(page);
+    }
+
+    @Test
+    void extractsOnlyKanjiCharacters() {
+        assertThat(KanjiInfoServiceImpl.kanjiCharacters("日本の人 hito 日")).containsExactly("日", "本", "人");
+        assertThat(KanjiInfoServiceImpl.kanjiCharacters("ひと hito")).isEmpty();
+    }
+
+    @Test
     void invalidPagingIsRejected() {
         assertThatThrownBy(() -> service.getKanjiPage(-1, 20, null)).isInstanceOf(BadRequestException.class);
         assertThatThrownBy(() -> service.getKanjiPage(0, 0, null)).isInstanceOf(BadRequestException.class);

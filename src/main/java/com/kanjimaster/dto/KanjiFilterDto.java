@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  * Kanji filter shared by GraphQL {@code getKanjis} and the PDF endpoint.
- * {@code search} matches readings (kana/romaji) and meanings via the SEARCH table.
+ * {@code search} matches kanji typed directly (e.g. 人) and kana/romaji readings via the SEARCH table.
  */
 @Getter
 @Setter
