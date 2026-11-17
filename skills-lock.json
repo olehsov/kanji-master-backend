@@ -1,0 +1,69 @@
+{
+  "version": 2,
+  "skills": {
+    "code-quality": {
+      "source": "piomin/claude-ai-spring-boot",
+      "commit": "cbd289d4adadef06bd2ac118294319a2f49f79ee",
+      "sourceType": "github",
+      "skillPath": "skills/code-quality/SKILL.md",
+      "computedHash": "9802cbc1d21b4d6762b42e9c07b6f19af1afd01de50d86d84e513db3a3d67603",
+      "installMode": "copy"
+    },
+    "conventions": {
+      "source": "piomin/claude-ai-spring-boot",
+      "commit": "cbd289d4adadef06bd2ac118294319a2f49f79ee",
+      "sourceType": "github",
+      "skillPath": "skills/conventions/SKILL.md",
+      "computedHash": "4665accb57a8439ec9e0bf377b0de025301c51b231b73981f1609100f706bac5",
+      "installMode": "copy"
+    },
+    "design-patterns": {
+      "source": "piomin/claude-ai-spring-boot",
+      "commit": "cbd289d4adadef06bd2ac118294319a2f49f79ee",
+      "sourceType": "github",
+      "skillPath": "skills/design-patterns/SKILL.md",
+      "computedHash": "b6287935e1bbfe4741877db14cccf809160593291e4e59275587c9a8e3bd5d20",
+      "installMode": "copy"
+    },
+    "java-modern": {
+      "source": "piomin/claude-ai-spring-boot",
+      "commit": "cbd289d4adadef06bd2ac118294319a2f49f79ee",
+      "sourceType": "github",
+      "skillPath": "skills/java-modern/SKILL.md",
+      "computedHash": "2175d29941216644ec6e4abd968d1a938f5650ef0c9d6a7b1ba32ce7691a660b",
+      "installMode": "copy"
+    },
+    "jpa-patterns": {
+      "source": "piomin/claude-ai-spring-boot",
+      "commit": "cbd289d4adadef06bd2ac118294319a2f49f79ee",
+      "sourceType": "github",
+      "skillPath": "skills/jpa-patterns/SKILL.md",
+      "computedHash": "0eed38a9eb90100399aac53f0781d84d750d72b0e31ea87f82eca40ef634c011",
+      "installMode": "copy"
+    },
+    "logging-patterns": {
+      "source": "piomin/claude-ai-spring-boot",
+      "commit": "cbd289d4adadef06bd2ac118294319a2f49f79ee",
+      "sourceType": "github",
+      "skillPath": "skills/logging-patterns/SKILL.md",
+      "computedHash": "99c449645b266dc55e255a2236d1c1d6adfa374dd3a21f416fe82db62adf40ea",
+      "installMode": "copy"
+    },
+    "spring-boot": {
+      "source": "piomin/claude-ai-spring-boot",
+      "commit": "cbd289d4adadef06bd2ac118294319a2f49f79ee",
+      "sourceType": "github",
+      "skillPath": "skills/spring-boot/SKILL.md",
+      "computedHash": "1457bb057497c1e6b1d7b448da4b845a829ea966b04d55ffaca7dc9a2c37485d",
+      "installMode": "copy"
+    },
+    "testing-patterns": {
+      "source": "piomin/claude-ai-spring-boot",
+      "commit": "cbd289d4adadef06bd2ac118294319a2f49f79ee",
+      "sourceType": "github",
+      "skillPath": "skills/testing-patterns/SKILL.md",
+      "computedHash": "791156ef200ee87eaeb3a67510cabb29ee19ecc3de27f2822c4fe6100c64223c",
+      "installMode": "copy"
+    }
+  }
+}
