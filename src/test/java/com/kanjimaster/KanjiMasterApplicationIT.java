@@ -58,11 +58,11 @@ class KanjiMasterApplicationIT {
                 .execute()
                 .path("getKanji.kanji").entity(String.class).isEqualTo("日");
 
-        graphQlTester.document("{ getKanjis(page: 0, size: 5, filter: {jlpt: [\"5\"]}) { content { kanji jlpt } totalElements } }")
+        graphQlTester.document("{ getKanjis(page: 0, size: 5, filter: {jlpt: [\"N5 (beginner)\"]}) { content { kanji jlpt } totalElements } }")
                 .execute()
                 .path("getKanjis.content").entityList(Object.class).hasSize(5)
                 .path("getKanjis.content[*].jlpt").entityList(String.class).satisfies(levels ->
-                        assertThat(levels).containsOnly("5"));
+                        assertThat(levels).containsOnly("N5 (beginner)"));
 
         graphQlTester.document("{ getRadicalSearchOptionDto { radical strokes isSimplifiedRadical } }")
                 .execute()
@@ -74,6 +74,13 @@ class KanjiMasterApplicationIT {
         graphQlTester.document("{ getKanjis(filter: {search: \"zzzzzz\"}) { content { kanji } totalElements } }")
                 .execute()
                 .path("getKanjis.totalElements").entity(Integer.class).isEqualTo(0);
+    }
+
+    @Test
+    void searchByKanjiCharacterFindsIt() {
+        graphQlTester.document("{ getKanjis(filter: {search: \"人\"}) { content { kanji } } }")
+                .execute()
+                .path("getKanjis.content[*].kanji").entityList(String.class).contains("人");
     }
 
     @Test
@@ -99,7 +106,7 @@ class KanjiMasterApplicationIT {
     @Test
     void pdfIsGeneratedFromDatabase() throws Exception {
         mockMvc.perform(post("/pdf/kanji-practice").contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"search\":\"nichi\",\"grade\":[\"1\"]}"))
+                        .content("{\"search\":\"nichi\",\"grade\":[\"Kyōiku-Jōyō (1st grade of primary school)\"]}"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_PDF));
     }

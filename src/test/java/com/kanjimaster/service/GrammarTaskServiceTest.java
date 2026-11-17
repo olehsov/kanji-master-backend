@@ -44,10 +44,14 @@ class GrammarTaskServiceTest {
     }
 
     @Test
-    void rejectsMissingSettings() {
-        assertThatThrownBy(() -> service.generate(1L, null)).isInstanceOf(BadRequestException.class);
-        assertThatThrownBy(() -> service.generate(1L, List.of())).isInstanceOf(BadRequestException.class);
-        verifyNoInteractions(generator);
+    void emptyOrMissingSettingsMeanNoExercises() {
+        // The frontend sends [] when every task type is switched off.
+        Topic topic = TestData.topic(1L, "Te-Form");
+        when(topicService.findById(1L)).thenReturn(topic);
+        when(generator.generate(topic, List.of())).thenReturn(new TopicTaskDto());
+
+        assertThat(service.generate(1L, List.of())).isNotNull();
+        assertThat(service.generate(1L, null)).isNotNull();
     }
 
     @Test

@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -94,12 +95,24 @@ public class KanjiInfoServiceImpl implements KanjiInfoService {
 
         String search = filter.getSearch();
         if (search != null && !search.isBlank()) {
-            List<String> matches = searchRepository.findAllKanjiBySearch(search.trim());
+            String term = search.trim();
+            // Kanji typed directly (e.g. "人" or "日本") match themselves; the rest matches readings.
+            Set<String> matches = new LinkedHashSet<>(kanjiCharacters(term));
+            matches.addAll(searchRepository.findAllKanjiBySearch(term));
             if (matches.isEmpty()) {
                 return Optional.empty();
             }
             spec = spec.and(KanjiInfoSpecifications.attributeIn("kanji", matches));
         }
         return Optional.of(spec);
+    }
+
+    /** Han (kanji) characters contained in the term, in order, without duplicates. */
+    static List<String> kanjiCharacters(String term) {
+        return term.codePoints()
+                .filter(cp -> Character.UnicodeScript.of(cp) == Character.UnicodeScript.HAN)
+                .distinct()
+                .mapToObj(Character::toString)
+                .toList();
     }
 }
