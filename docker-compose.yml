@@ -1,7 +1,6 @@
-version: '3'
 services:
   db:
-    image: postgres
+    image: postgres:17
     ports:
       - "5432:5432"
     restart: always
@@ -9,23 +8,24 @@ services:
       - POSTGRES_PASSWORD=kanji-master
       - POSTGRES_USER=kanji-master
       - POSTGRES_DB=kanji-master
-    networks:
-      - postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U kanji-master"]
+      interval: 5s
+      retries: 10
   backend:
-    image: kmb
+    build: .
     ports:
-      - "8000:8000"
+      - "8080:8080"
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     environment:
+      - DB_HOST=db
+      - DB_PORT=5432
       - DB_NAME=kanji-master
       - DB_USER=kanji-master
       - DB_PASSWORD=kanji-master
-      - DB_HOST=host.docker.internal
-      - DB_PORT=5432
-      - APP_PORT=8000
-    networks:
-      - postgres
-networks:
-  postgres:
-    driver: bridge
+      - APP_PORT=8080
+      - KANJI_AI_PROVIDER=${KANJI_AI_PROVIDER:-stub}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
+      - OPENAI_API_TOKEN=${OPENAI_API_TOKEN:-}
