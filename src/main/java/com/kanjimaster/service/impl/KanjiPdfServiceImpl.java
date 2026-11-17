@@ -31,11 +31,14 @@ import java.util.Map;
 
 @Service
 public class KanjiPdfServiceImpl implements KanjiPdfService {
-    private final int NUM_COLUMN = 10;
+    private static final int NUM_COLUMN = 10;
+    private static final float CELL_HEIGHT = 50;
 
     @Override
     public byte[] buildKanjiLearnFile(Map<KanjiInfo, String> kanjiesMap) throws IOException {
-        List<KanjiInfo> kanjies = kanjiesMap.keySet().stream().sorted(Comparator.comparing(KanjiInfo::getFrequency)).toList();
+        List<KanjiInfo> kanjies = kanjiesMap.keySet().stream()
+                .sorted(Comparator.comparing(KanjiInfo::getFrequency, Comparator.nullsLast(Comparator.naturalOrder())))
+                .toList();
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
         PdfWriter writer = new PdfWriter(baos);
@@ -47,7 +50,6 @@ public class KanjiPdfServiceImpl implements KanjiPdfService {
 
         document.setFont(font);
         kanjies.forEach(kanjiInfo -> updateDocumentWithKanji(document, pdf, kanjiInfo, kanjiesMap.get(kanjiInfo)));
-
         document.close();
 
         return baos.toByteArray();
@@ -57,16 +59,18 @@ public class KanjiPdfServiceImpl implements KanjiPdfService {
         document.add(new Paragraph(kanjiInfo.getKanji())
                 .setFontSize(60)
                 .setTextAlignment(TextAlignment.CENTER));
-        document.add(new Paragraph("Meanings: " + kanjiInfo.getMeaning().replace(";", ", ")).setFontSize(14));
-        document.add(new Paragraph("Onyomi: " + kanjiInfo.getOnyomi()).setFontSize(14));
-        document.add(new Paragraph("Kunyomi: " + kanjiInfo.getKunyomi()).setFontSize(14));
-
-        document.add(new Paragraph("Words: " + wordRep).setFontSize(14));
-
+        document.add(new Paragraph("Meanings: " + nullToEmpty(kanjiInfo.getMeaning()).replace(";", ", ")).setFontSize(14));
+        document.add(new Paragraph("Onyomi: " + nullToEmpty(kanjiInfo.getOnyomi())).setFontSize(14));
+        document.add(new Paragraph("Kunyomi: " + nullToEmpty(kanjiInfo.getKunyomi())).setFontSize(14));
+        document.add(new Paragraph("Words: " + nullToEmpty(wordRep)).setFontSize(14));
 
         document.add(buildTable(pdf, kanjiInfo));
 
         document.add(new Paragraph("\n"));
+    }
+
+    private static String nullToEmpty(String value) {
+        return value == null ? "" : value;
     }
 
     private Table buildTable(PdfDocument pdf, KanjiInfo kanjiInfo) {
@@ -82,7 +86,6 @@ public class KanjiPdfServiceImpl implements KanjiPdfService {
     private Cell buildCell(PdfDocument pdf, KanjiInfo kanjiInfo, int index) {
         final float cellWidth = pdf.getDefaultPageSize().getWidth() / NUM_COLUMN;
 
-        float CELL_HEIGHT = 50;
         Cell cell = new Cell()
                 .setHeight(CELL_HEIGHT)
                 .setTextAlignment(TextAlignment.CENTER)

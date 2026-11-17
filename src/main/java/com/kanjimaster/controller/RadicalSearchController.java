@@ -4,7 +4,6 @@ import com.kanjimaster.dto.RadicalSearchOptionDto;
 import com.kanjimaster.service.RadicalSearchService;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
-import reactor.core.publisher.Mono;
 
 import java.util.Collection;
 
@@ -17,7 +16,7 @@ public class RadicalSearchController {
     }
 
     @QueryMapping
-    public Mono<Collection<RadicalSearchOptionDto>> getRadicalSearchOptionDto() {
-        return Mono.just(radicalSearchService.findAllRadicalsSearchOptions());
+    public Collection<RadicalSearchOptionDto> getRadicalSearchOptionDto() {
+        return radicalSearchService.findAllRadicalsSearchOptions();
     }
 }

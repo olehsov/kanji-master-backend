@@ -1,18 +1,16 @@
 package com.kanjimaster.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "VIDEO_SUBTITLE")
-@Data
+@Getter
+@Setter
 public class VideoSubtitle {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,14 +27,8 @@ public class VideoSubtitle {
 
     @ManyToOne
     @JoinColumn(referencedColumnName = "id", name = "video_id", nullable = false)
-    @JsonIgnore
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
     private VideoMetadata videoMetadata;
 
     @OneToMany(mappedBy = "videoSubtitle", fetch = FetchType.LAZY,  cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
     private Set<IndividualSubtitleTranslation> individualTranslations = new HashSet<>();
 }

@@ -1,11 +1,12 @@
 package com.kanjimaster.model;
-
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "TOPIC")
-@Data
+@Getter
+@Setter
 public class Topic {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

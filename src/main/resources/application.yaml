@@ -1,241 +1,67 @@
 spring:
-  jpa:
-    database: POSTGRESQL
-    show-sql: false
-    properties:
-      hibernate:
-        format_sql: true
-        jdbc:
-          batch_size: 500
-          batch_versioned_data: true
-        order_inserts: true
-        order_updates: true
-        generate_statistics: true
-    hibernate:
-      ddl-auto: validate
   application:
     name: kanji-master
   datasource:
     url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:kanji-master}
     username: ${DB_USER:kanji-master}
     password: ${DB_PASSWORD:kanji-master}
-    driver-class-name: org.postgresql.Driver
-  sql:
-    init:
-      platform: postgres
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        jdbc:
+          batch_size: 500
+        order_inserts: true
+        order_updates: true
+  flyway:
+    # Production schema predates Flyway on the classpath: mark it as V15 once, then run V16+ automatically.
+    baseline-on-migrate: true
+    baseline-version: 15
   graphql:
     graphiql:
-      enabled: true
-  ai:
-    openai:
-      api-key: ${OPENAI_API_TOKEN}
-      base-url: https://api.openai.com/
-      chat:
-        options:
-          model: gpt-4o
-          response-format:
-            type: JSON_SCHEMA
-            name: JapaneseTaskBuilder
-            schema: >
-              {
-                "type": "object",
-                "properties": {
-                  "formation": {
-                    "type": "string",
-                    "description": "Formation of specific Japanese grammar topic. Prettify by using html"
-                  },
-                  "exampleSentences": {
-                    "type": "array",
-                    "description": "Example sentences in specific Japanese grammar topic.",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "sentence": {
-                          "type": "string",
-                          "description": "Example sentence in specific Japanese grammar topic"
-                        },
-                        "translation": {
-                          "type": "string",
-                          "description": "Translation of the sentence"
-                        }
-                      },
-                      "required": [
-                        "sentence",
-                        "translation"
-                      ],
-                      "additionalProperties": false
-                    }
-                  },
-                  "tasks": {
-                    "type": "array",
-                    "description": "A collection of language tasks relevant to the topic.",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "taskType": {
-                          "type": "string",
-                          "description": "The type of task to be performed.",
-                          "enum": [
-                            "CONVERT_TO_FORMATION",
-                            "TRANSLATE_TO_JAPANESE",
-                            "FILL_IN_THE_BLANKS"
-                          ]
-                        },
-                        "description": {
-                          "type": "string",
-                          "description": "A brief description of the task. Should be in English"
-                        },
-                        "question": {
-                          "type": "string",
-                          "description": "A question that relate its type."
-                        },
-                        "correctAnswer": {
-                          "type": "string",
-                          "description": "A correct answer to the question."
-                        },
-                        "resources": {
-                          "type": "array",
-                          "description": "Links or materials that can assist with the task.",
-                          "items": {
-                            "type": "string"
-                          }
-                        }
-                      },
-                      "required": [
-                        "taskType",
-                        "description",
-                        "question",
-                        "correctAnswer",
-                        "resources"
-                      ],
-                      "additionalProperties": false
-                    }
-                  }
-                },
-                "required": [
-                  "formation",
-                  "exampleSentences",
-                  "tasks"
-                ],
-                "additionalProperties": false
-              }
-      chat-transcript-audio:
-        options:
-          model: 'whisper-1'
-
-      chat-subtitle:
-        options:
-          model: gpt-4o
-          response-format:
-            type: JSON_SCHEMA
-            name: JapaneseTranscriptBuilder
-            schema: >
-              {
-                  "type": "object",
-                  "properties": {
-                    "subtitles": {
-                      "type": "array",
-                      "description": "List of subtitle lines with timing and translations.",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "index": {
-                            "type": "integer",
-                            "description": "The sequential index of the subtitle line."
-                          },
-                          "timingStart": {
-                            "type": "string",
-                            "description": "The start timing of the subtitle in the format 'HH:MM:SS,MS'."
-                          },
-                          "timingEnd": {
-                            "type": "string",
-                            "description": "The end timing of the subtitle in the format 'HH:MM:SS,MS'."
-                          },
-                          "line": {
-                            "type": "string",
-                            "description": "The original subtitle line in Japanese."
-                          },
-                          "translation": {
-                            "type": "string",
-                            "description": "The complete translation of the line in Ukrainian."
-                          },
-                          "kanjies": {
-                            "type": "string",
-                            "description": "List of kanji that used in the subtitle, joined by coma"
-                          },
-                          "grammars": {
-                            "type": "string",
-                            "description": "List of grammars that used in the subtitle, joined by coma"
-                          },
-                          "individualTranslations": {
-                            "type": "array",
-                            "description": "Translations of each kanji or phrase used in the line.",
-                            "items": {
-                              "type": "object",
-                              "properties": {
-                                "text": {
-                                  "type": "string",
-                                  "description": "The word or phrase"
-                                },
-                                "textHiragana": {
-                                  "type": "string",
-                                  "description": "The word or phrase in Hiragana"
-                                },
-                                "meaning": {
-                                  "type": "string",
-                                  "description": "Meaning of the word or phrase"
-                                },
-                                "isWord": {
-                                  "type": "boolean",
-                                  "description": "Is it word"
-                                },
-                                "jlpt": {
-                                  "type": "string",
-                                  "description": "JLPT score from N1 to N5"
-                                }
-                              },
-                              "required": [
-                                "text",
-                                "textHiragana",
-                                "meaning",
-                                "isWord",
-                                "jlpt"
-                              ],
-                              "additionalProperties": false
-                            }
-                          }
-                        },
-                        "required": [
-                          "index",
-                          "timingStart",
-                          "timingEnd",
-                          "line",
-                          "translation",
-                          "kanjies",
-                          "grammars",
-                          "individualTranslations"
-                        ],
-                        "additionalProperties": false
-                      }
-                    }
-                  },
-                  "required": [
-                    "subtitles"
-                  ],
-                  "additionalProperties": false
-                }
-  servlet.multipart:
-      max-file-size: 500MB
-      max-request-size: 500MB
-  main:
-    allow-circular-references: true
+      enabled: ${KANJI_DOCS_ENABLED:true}
+    schema:
+      printer:
+        enabled: ${KANJI_DOCS_ENABLED:true}
 
 server:
   port: ${APP_PORT:8080}
 
+springdoc:
+  api-docs:
+    enabled: ${KANJI_DOCS_ENABLED:true}
+  swagger-ui:
+    enabled: ${KANJI_DOCS_ENABLED:true}
+    path: /swagger-ui.html
+
+kanji:
+  cors:
+    allowed-origins:
+      - http://localhost:4200
+      - https://kanji-master-frontend-2sumyipbsq-uc.a.run.app
+      - https://kanji-master-frontend-695666739311.europe-west1.run.app
+  ai:
+    # stub (default): fixed demo responses, no external calls | claude | openai (deprecated)
+    provider: ${KANJI_AI_PROVIDER:stub}
+    anthropic:
+      api-key: ${ANTHROPIC_API_KEY:}
+      model: ${KANJI_AI_CLAUDE_MODEL:claude-haiku-5-5}
+    openai:
+      # Used for Whisper audio transcription whenever provider is not stub
+      api-key: ${OPENAI_API_TOKEN:}
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        generate_statistics: true
 logging:
   level:
     org.springframework.web.client: DEBUG
-    org.springframework.web.reactive.function.client: DEBUG
-    org.apache.http: DEBUG
-    org.apache.http.wire: DEBUG

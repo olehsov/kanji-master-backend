@@ -2,8 +2,6 @@ package com.kanjimaster.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.kanjimaster.model.IndividualSubtitleTranslation;
 import com.kanjimaster.model.VideoSubtitle;
 import lombok.AllArgsConstructor;
@@ -11,13 +9,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Collection;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@JsonDeserialize
-@JsonSerialize
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -59,9 +55,10 @@ public class SubtitleDto {
         videoSubtitle.setKanjies(kanjies);
         videoSubtitle.setGrammars(grammars);
 
-        Set<IndividualSubtitleTranslation> individualSubtitleTranslation = individualTranslations.stream()
+        List<IndividualTranslationDto> translations = individualTranslations == null ? List.of() : individualTranslations;
+        Set<IndividualSubtitleTranslation> individualSubtitleTranslation = translations.stream()
                 .map(IndividualTranslationDto::toIndividualSubtitleTranslation)
-                .collect(Collectors.toSet());
+                .collect(Collectors.toCollection(LinkedHashSet::new));
         videoSubtitle.setIndividualTranslations(individualSubtitleTranslation);
         return videoSubtitle;
     }
