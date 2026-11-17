@@ -29,7 +29,7 @@ Try queries in **GraphiQL** at `/graphiql`; printed schema at `/graphql/schema`.
 
 | Query | Purpose |
 |---|---|
-| `getKanjis(page, size, filter)` | Paged kanji list; filter by `search` (kana/romaji reading via SEARCH table), `grade`, `jlpt` (values exactly as stored, e.g. `N5 (beginner)`). Search with no matches → empty page |
+| `getKanjis(page, size, filter)` | Paged kanji list; filter by `search` (kanji typed directly, e.g. `人`, plus kana/romaji readings via SEARCH table), `grade`, `jlpt` (values exactly as stored, e.g. `N5 (beginner)`). Search with no matches → empty page |
 | `getKanji(kanji)` | One kanji with its 15 most frequent words; `NOT_FOUND` if missing |
 | `getRadicalSearchOptionDto` | Radicals + variants for the radical picker, by stroke count |
 | `getKanjiesByRadical(radicals)` | Kanji containing all given radicals (`elements` LIKE match) |
