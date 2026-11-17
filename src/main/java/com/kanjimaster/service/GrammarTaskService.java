@@ -30,8 +30,8 @@ public class GrammarTaskService {
     }
 
     private static List<GrammarSettingPayloadDto> validate(List<GrammarSettingPayloadDto> settings) {
-        if (settings == null || settings.isEmpty()) {
-            throw new BadRequestException("At least one task setting is required");
+        if (settings == null) {
+            return List.of();
         }
         List<GrammarSettingPayloadDto> nonNull = settings.stream().filter(Objects::nonNull).toList();
         for (GrammarSettingPayloadDto setting : nonNull) {
