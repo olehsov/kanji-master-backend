@@ -1,15 +1,11 @@
 package com.kanjimaster;
 
-
-import com.kanjimaster.config.OpenAiConfigurationProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 
-@EnableJpaRepositories
 @SpringBootApplication
-@EnableConfigurationProperties({OpenAiConfigurationProperties.class})
+@ConfigurationPropertiesScan
 public class KanjiMasterApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(KanjiMasterApplication.class, args);

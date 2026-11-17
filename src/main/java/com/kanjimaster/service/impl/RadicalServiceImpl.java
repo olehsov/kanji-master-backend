@@ -4,10 +4,12 @@ import com.kanjimaster.model.updated.Radical;
 import com.kanjimaster.repository.RadicalRepository;
 import com.kanjimaster.service.RadicalService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 
 @Service
+@Transactional(readOnly = true)
 public class RadicalServiceImpl implements RadicalService {
     private final RadicalRepository repository;
 

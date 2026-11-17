@@ -1,0 +1,44 @@
+{
+  "subtitles": [
+    {
+      "index": 1,
+      "timingStart": "00:00:00,000",
+      "timingEnd": "00:00:03,000",
+      "line": "こんにちは、皆さん。",
+      "translation": "Привіт усім.",
+      "kanjies": "皆",
+      "grammars": "",
+      "individualTranslations": [
+        {"text": "こんにちは", "textHiragana": "こんにちは", "meaning": "добрий день, привіт", "isWord": true, "jlpt": "N5"},
+        {"text": "皆さん", "textHiragana": "みなさん", "meaning": "усі (ввічливо)", "isWord": true, "jlpt": "N5"}
+      ]
+    },
+    {
+      "index": 2,
+      "timingStart": "00:00:03,000",
+      "timingEnd": "00:00:07,000",
+      "line": "今日は日本語を勉強しましょう。",
+      "translation": "Сьогодні давайте вчити японську.",
+      "kanjies": "今,日,本,語,勉,強",
+      "grammars": "〜ましょう",
+      "individualTranslations": [
+        {"text": "今日", "textHiragana": "きょう", "meaning": "сьогодні", "isWord": true, "jlpt": "N5"},
+        {"text": "日本語", "textHiragana": "にほんご", "meaning": "японська мова", "isWord": true, "jlpt": "N5"},
+        {"text": "勉強しましょう", "textHiragana": "べんきょうしましょう", "meaning": "давайте вчитися", "isWord": false, "jlpt": "N5"}
+      ]
+    },
+    {
+      "index": 3,
+      "timingStart": "00:00:07,000",
+      "timingEnd": "00:00:11,000",
+      "line": "これはデモ用の字幕です。",
+      "translation": "Це демонстраційні субтитри: обробку відео через AI тимчасово вимкнено.",
+      "kanjies": "用,字,幕",
+      "grammars": "〜は〜です",
+      "individualTranslations": [
+        {"text": "デモ用", "textHiragana": "でもよう", "meaning": "для демонстрації", "isWord": true, "jlpt": ""},
+        {"text": "字幕", "textHiragana": "じまく", "meaning": "субтитри", "isWord": true, "jlpt": "N2"}
+      ]
+    }
+  ]
+}

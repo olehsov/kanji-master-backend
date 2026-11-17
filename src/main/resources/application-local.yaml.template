@@ -1,0 +1,16 @@
+# Copy to application-local.yaml (git-ignored) and run with:
+#   ./gradlew bootRun --args='--spring.profiles.active=local'
+# Values here override application.yaml. Never commit real keys.
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/kanji-master
+    username: kanji-master
+    password: kanji-master
+
+kanji:
+  ai:
+    provider: stub            # stub | claude | openai
+    anthropic:
+      api-key: ""             # required for claude
+    openai:
+      api-key: ""             # Whisper; required for any provider except stub

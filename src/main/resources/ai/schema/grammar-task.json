@@ -1,0 +1,82 @@
+{
+  "type": "object",
+  "properties": {
+    "formation": {
+      "type": "string",
+      "description": "Formation of specific Japanese grammar topic. Prettify by using html"
+    },
+    "exampleSentences": {
+      "type": "array",
+      "description": "Example sentences in specific Japanese grammar topic.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "sentence": {
+            "type": "string",
+            "description": "Example sentence in specific Japanese grammar topic"
+          },
+          "translation": {
+            "type": "string",
+            "description": "Translation of the sentence"
+          }
+        },
+        "required": [
+          "sentence",
+          "translation"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "tasks": {
+      "type": "array",
+      "description": "A collection of language tasks relevant to the topic.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "taskType": {
+            "type": "string",
+            "description": "The type of task to be performed.",
+            "enum": [
+              "CONVERT_TO_FORMATION",
+              "TRANSLATE_TO_JAPANESE",
+              "FILL_IN_THE_BLANKS"
+            ]
+          },
+          "description": {
+            "type": "string",
+            "description": "A brief description of the task. Should be in English"
+          },
+          "question": {
+            "type": "string",
+            "description": "A question that relate its type."
+          },
+          "correctAnswer": {
+            "type": "string",
+            "description": "A correct answer to the question."
+          },
+          "resources": {
+            "type": "array",
+            "description": "Links or materials that can assist with the task.",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "taskType",
+          "description",
+          "question",
+          "correctAnswer",
+          "resources"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "formation",
+    "exampleSentences",
+    "tasks"
+  ],
+  "additionalProperties": false
+}

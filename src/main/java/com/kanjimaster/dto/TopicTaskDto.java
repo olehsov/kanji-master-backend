@@ -4,6 +4,7 @@ import lombok.Data;
 
 import java.util.List;
 
+/** AI-generated lesson for a grammar topic. Field names match the JSON schema in ai/schema/grammar-task.json. */
 @Data
 public class TopicTaskDto {
     private String header;
@@ -19,7 +20,7 @@ public class TopicTaskDto {
 
     @Data
     public static class Task {
-        private String taskType;
+        private TaskType taskType;
         private String description;
         private String question;
         private String correctAnswer;
