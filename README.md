@@ -53,8 +53,17 @@ for how the providers work.
 ```bash
 ./gradlew build
 ```
-Integration tests (`*IT`) start PostgreSQL with Testcontainers and need Docker (Docker Desktop or Colima). Without
-Docker they are skipped. Coverage report: `build/reports/jacoco/test/html/index.html`.
+Integration tests (`*IT`) start PostgreSQL with Testcontainers and need Docker or Podman. Without either they are
+skipped.
+
+**Podman (macOS):** install Podman Desktop, create and start a Podman machine (rootful), then point Testcontainers
+at it. If Docker Desktop is also installed, `/var/run/docker.sock` belongs to Docker Desktop, so set:
+```bash
+export DOCKER_HOST="unix://$HOME/.local/share/containers/podman/machine/podman.sock"
+export TESTCONTAINERS_DOCKER_SOCKET_OVERRIDE=/var/run/docker.sock
+./gradlew test
+```
+`podman build` and `podman compose up --build` work with the same `Dockerfile` and `docker-compose.yml`. Coverage report: `build/reports/jacoco/test/html/index.html`.
 
 ## Deployment
 Google Cloud Run, built from this repository's `Dockerfile`. CI (`.github/workflows/docker-publish.yml`) builds,
