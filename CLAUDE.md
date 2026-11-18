@@ -99,7 +99,8 @@ CORS origins: `kanji.cors.allowed-origins` in `application.yaml` (no trailing sl
 ## Testing conventions
 - Unit tests (`*Test`) with Mockito for services/AI; `@GraphQlTest` and `@WebMvcTest` slices for controllers.
 - Integration tests (`*IT`) use `support/PostgresContainer` (`@ServiceConnection`, all migrations, real data) and
-  `@Testcontainers(disabledWithoutDocker = true)` — they **skip silently without Docker**; CI runs them.
+  `@Testcontainers(disabledWithoutDocker = true)` — they **skip silently without Docker**; CI runs them. One
+  Postgres container is shared per JVM. Locally they also run on Podman (see README → Tests).
 - Never call real AI APIs in tests: mock `ClaudeJsonClient` / generators; the app context uses the stub.
 - Write positive and negative cases; test data builders in `support/TestData`.
 

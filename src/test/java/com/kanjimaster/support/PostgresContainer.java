@@ -7,14 +7,20 @@ import org.testcontainers.postgresql.PostgreSQLContainer;
 
 /**
  * Shared Postgres for integration tests. Flyway applies all migrations (V1..V16) on startup, so tests run
- * against the real dictionary data. Requires Docker.
+ * against the real dictionary data. Requires Docker or Podman.
+ * <p>
+ * One container is shared by every test context in the JVM: it is faster, and starting a second container
+ * in the same run is flaky on Podman machines (dropped API connections).
  */
 @TestConfiguration(proxyBeanMethods = false)
 public class PostgresContainer {
 
-    @Bean
+    private static final PostgreSQLContainer POSTGRES = new PostgreSQLContainer("postgres:17-alpine");
+
+    /** Not stopped when a Spring test context closes; Testcontainers (Ryuk) removes it when the JVM exits. */
+    @Bean(destroyMethod = "")
     @ServiceConnection
     PostgreSQLContainer postgres() {
-        return new PostgreSQLContainer("postgres:17-alpine").withReuse(true);
+        return POSTGRES;
     }
 }
